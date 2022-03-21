@@ -1,6 +1,7 @@
 import testRoute from "./routers/contacts"
 import express from 'express';
 import cors from "cors"
+import { createConnection } from 'typeorm';
 
 class Server{
   private app: express.Application;
@@ -23,9 +24,14 @@ class Server{
   }
 
   public start_app(){
-    this.app.listen(this.PORT, () => {
-      console.log(`Server running on http://localhost:${this.PORT}`);
-    });
+
+    createConnection()
+    .then(async (_) => {
+      this.app.listen(this.PORT, () => {
+        console.log(`Server running on http://localhost:${this.PORT}`);
+      });
+    }).catch((error) => console.log(error));
+
   }
 }
 
