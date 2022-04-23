@@ -10,15 +10,14 @@ class Server{
   constructor(){
     this.app = express();
     this.config_routes();
-    this.PORT = 3000;
+    this.PORT = 8080;
   }
 
   public config_routes(){
-    this.app.use(cors())
+    this.app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 }));
     this.app.use(express.json());
     this.app.use(testRoute)
-    
-    this.app.get("/", function(_, res) {
+	this.app.get("/", function(_, res) {
       res.send("Respota da Home");
     })
   }
